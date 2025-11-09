@@ -1,0 +1,299 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Fuentes Ubuntu */
+@font-face {
+    font-family: 'Ubuntu';
+    src: url('../fonts/Ubuntu-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Ubuntu';
+    src: url('../fonts/Ubuntu-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    position: relative;
+    width: 1080px;
+    height: 1440px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.san-juan-wrapper {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+}
+
+.san-juan {
+    width: 239px;
+    height: 37px;
+    background-image: url('../assets/sanjuan.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0;
+    animation: fadeIn 1s ease-in forwards;
+    animation-delay: 0.5s;
+}
+
+.mi-tierra-wrapper {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+}
+
+.mi-tierra {
+    width: 633px;
+    height: 290px;
+    opacity: 0;
+}
+
+.mi-tierra.ready {
+    opacity: 1;
+}
+
+.button-wrapper {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 4;
+    opacity: 0;
+    animation: buttonAppear 0.8s ease-out 3s forwards, buttonPulse 2s ease-in-out 4s infinite;
+}
+
+.comenzar-btn, .botonplay-btn {
+    position: relative;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    border-radius: 60px;
+    overflow: hidden;
+    padding: 0;
+}
+
+.comenzar-btn::before, .botonplay-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, 
+        rgba(255, 200, 50, 0.4) 0%, 
+        rgba(255, 150, 50, 0.5) 50%, 
+        rgba(255, 100, 30, 0.4) 100%);
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    z-index: 2;
+    border-radius: 60px;
+    animation: shimmer 3s ease-in-out infinite;
+}
+
+.button-overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 75% 20%, 
+        rgba(255, 255, 200, 0.7) 0%, 
+        rgba(255, 200, 100, 0.4) 35%, 
+        transparent 65%);
+    mix-blend-mode: soft-light;
+    pointer-events: none;
+    z-index: 3;
+    border-radius: 60px;
+    opacity: 0.9;
+}
+
+.comenzar-btn:hover, .botonplay-btn:hover {
+    transform: scale(1.08);
+    filter: brightness(1.15);
+}
+
+.comenzar-btn:active, .botonplay-btn:active {
+    transform: scale(0.98);
+}
+
+.comenzar-btn img, .botonplay-btn img {
+    position: relative;
+    width: 350px;
+    height: auto;
+    display: block;
+    z-index: 1;
+}
+
+/* Pantalla 2 */
+.pantalla2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding-top: 10%;
+    padding-left: 8%;
+    padding-right: 8%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 3;
+}
+
+.pantalla2 .titulo {
+    width: 84%;
+    margin-top: 8%;
+    margin-bottom: 3%;
+    color: #ffffff;
+    font-family: 'Ubuntu', Arial, sans-serif;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 0.5px;
+    font-size: clamp(48px, 6vw, 110px);
+    line-height: 1.1;
+}
+
+.pantalla2 .parrafo {
+    width: 80%;
+    margin-top: 2%;
+    margin-bottom: 4%;
+    color: #ffffff;
+    font-family: 'Ubuntu', Arial, sans-serif;
+    font-weight: 400;
+    text-align: center;
+    font-size: clamp(22px, 2.4vw, 36px);
+    line-height: 1.35;
+}
+
+.play-button-wrapper {
+    margin-top: 4%;
+    z-index: 4;
+}
+
+.logofooter {
+    margin-top: 9%;
+    margin-bottom: 4%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3%;
+}
+
+.logofooter-sanjuan {
+    width: 16%;
+    height: 4%;
+    background-image: url('../assets/sanjuan.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.9;
+}
+
+.logofooter-tierra {
+    width: 30%;
+    height: 8%;
+    background-image: url('../assets/mitierraquerida.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Animación de aparición del botón */
+@keyframes buttonAppear {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(30px) scale(0.8);
+    }
+    60% {
+        transform: translateX(-50%) translateY(-10px) scale(1.1);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0) scale(1);
+    }
+}
+
+/* Animación de pulso suave */
+@keyframes buttonPulse {
+    0%, 100% {
+        transform: translateX(-50%) scale(1);
+    }
+    50% {
+        transform: translateX(-50%) scale(1.05);
+    }
+}
+
+/* Animación de brillo deslizante */
+@keyframes shimmer {
+    0%, 100% {
+        opacity: 0.6;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+/* Animación de fade in para San Juan */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Media query para ajustar a diferentes tamaños de pantalla */
+@media screen and (max-width: 1080px) {
+    .container {
+        width: 100vw;
+        height: 100vh;
+    }
+    
+    .san-juan {
+        width: 22vw;
+        height: auto;
+    }
+    
+    .mi-tierra {
+        width: 59vw;
+        height: auto;
+    }
+    
+    .comenzar-btn img, .botonplay-btn img {
+        width: 32vw;
+    }
+}
