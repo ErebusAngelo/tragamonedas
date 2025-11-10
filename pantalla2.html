@@ -8,8 +8,11 @@
 </head>
 <body>
     <div class="container">
-        <!-- Fondo -->
-        <img src="assets/fondo2.png" alt="Fondo" class="background-image">
+        <!-- Fondo: shader WebGL con fallback a imagen -->
+        <div class="background-layer">
+            <canvas id="bgCanvas" class="background-canvas"></canvas>
+            <img src="assets/fondo2.png" alt="Fondo" class="background-image fallback">
+        </div>
 
         <!-- Contenido principal -->
         <section class="pantalla2">
@@ -23,7 +26,7 @@
 
             <!-- Botón Jugar -->
             <div class="play-button-wrapper">
-                <button class="botonplay-btn" type="button">
+                <button class="botonplay-btn" type="button" onclick="location.href='pantalla3.html'">
                     <div class="button-overlay"></div>
                     <img src="assets/botonplay.png" alt="Jugar">
                 </button>
@@ -35,5 +38,6 @@
             </div>
         </section>
     </div>
+    <script src="js/bg-shader.js"></script>
 </body>
 </html>

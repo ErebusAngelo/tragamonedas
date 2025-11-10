@@ -1,0 +1,33 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --game-width: 1080px;
+  --game-height: 1440px;
+  --reel-width: 300px;
+  --reel-height: 1120px; /* altura mayor para reducir espacios vacíos superior/inferior */
+  --tile-height: 260px;
+  /* frame-offset-y eliminado: se usa centro geométrico del reel */
+}
+
+html, body { width: 100%; height: 100%; overflow: hidden; background: transparent; font-family: 'Ubuntu', Arial, sans-serif; }
+
+.game-container { position: relative; width: var(--game-width); height: var(--game-height); margin: 0 auto; overflow: hidden; }
+.game-background { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
+
+.machine { position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+
+.reels { display: flex; gap: 36px; align-items: center; justify-content: center; margin-top: 4%; }
+
+.reel { position: relative; width: var(--reel-width); height: var(--reel-height); overflow: hidden; border-radius: 180px; background: rgba(5, 20, 30, 0.85); box-shadow: inset 0 0 60px rgba(0,0,0,0.5); cursor: pointer; }
+.reel-track { position: absolute; left: 0; top: 0; width: 100%; will-change: transform; }
+.tile { width: 100%; height: var(--tile-height); object-fit: contain; display: block; }
+
+.reel-frame { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+/* Indicadores laterales deshabilitados temporalmente para debug */
+
+
+
+@media screen and (max-width: 1080px) {
+  .game-container { width: 100vw; height: 100vh; }
+  :root { --reel-width: 28vw; --reel-height: 78vh; --tile-height: 18vh; }
+}

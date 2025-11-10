@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pantalla 3 - Juego</title>
+    <link rel="stylesheet" href="css/pantalla3.css">
+</head>
+<body>
+    <div class="game-container">
+        <img src="assets/gamescreen/fondomachine.png" alt="Fondo máquina" class="game-background">
+
+        <section class="machine" aria-label="Máquina tragamonedas">
+            <div class="reels">
+                <div class="reel" data-reel="0" role="button" aria-label="Rodillo 1">
+                    <div class="reel-track"></div>
+                    <img src="assets/gamescreen/marco.svg" alt="Marco" class="reel-frame" aria-hidden="true">
+                </div>
+                <div class="reel" data-reel="1" role="button" aria-label="Rodillo 2">
+                    <div class="reel-track"></div>
+                    <img src="assets/gamescreen/marco.svg" alt="Marco" class="reel-frame" aria-hidden="true">
+                </div>
+                <div class="reel" data-reel="2" role="button" aria-label="Rodillo 3">
+                    <div class="reel-track"></div>
+                    <img src="assets/gamescreen/marco.svg" alt="Marco" class="reel-frame" aria-hidden="true">
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="js/slot.js"></script>
+</body>
+</html>
