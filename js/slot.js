@@ -119,8 +119,9 @@
     };
 
     function render() {
-      const modRange = Math.max(1, trackH - reelH);
-      const y = - (state.pos % modRange);
+      const modRange = trackH - reelH; // rango visible
+      let y = - (state.pos % trackH);
+      if (y < -modRange) y += modRange; // mantener y dentro [-modRange, 0]
       track.style.transform = `translate3d(0, ${y}px, 0)`;
     }
 
@@ -142,11 +143,12 @@
 
     function computeTargetFromCurrent() {
       const half = tileH / 2;
-      const k = Math.round((state.pos + center - half) / tileH);
-      let target = (k + 0.5) * tileH - center;
-      while (target < state.pos) target += tileH; // asegurar objetivo hacia adelante
-      state.targetPos = target;
-      state.targetIndex = k;
+      const r = (state.pos + center) % tileH; // posición relativa dentro del tile
+      let delta = half - r; // cuánto falta para llegar al centro
+      if (delta <= 0) delta += tileH; // mover siempre hacia adelante
+      state.targetPos = state.pos + delta;
+      // opcional: índice aproximado del tile objetivo
+      state.targetIndex = Math.floor((state.pos + center + delta) / tileH);
     }
 
     function onPointerDown(e) {
@@ -192,8 +194,9 @@
     const state = ro.state;
 
     function render() {
-      const modRange = Math.max(1, trackH - reelH);
-      const y = - (state.pos % modRange);
+      const modRange = trackH - reelH;
+      let y = - (state.pos % trackH);
+      if (y < -modRange) y += modRange;
       track.style.transform = `translate3d(0, ${y}px, 0)`;
     }
     function finalizeStop() {
@@ -229,7 +232,7 @@
         const decel = 1200 * dt;
         state.speed = Math.max(40, state.speed - decel);
         const nextPos = state.pos + state.speed * dt;
-        if (state.targetPos != null && nextPos >= state.targetPos - 2) {
+        if (state.targetPos != null && nextPos >= state.targetPos - 1) {
           state.pos = state.targetPos;
           finalizeStop();
         } else {
