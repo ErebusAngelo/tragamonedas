@@ -8,6 +8,11 @@
 </head>
 <body>
     <div class="game-container">
+        <!-- Fondo: shader WebGL con fallback a color sólido -->
+        <div class="background-layer">
+            <canvas id="bgCanvas" class="background-canvas"></canvas>
+        </div>
+        
         <img src="assets/gamescreen/fondomachine.png" alt="Fondo máquina" class="game-background">
 
         <section class="machine" aria-label="Máquina tragamonedas">
@@ -28,6 +33,7 @@
         </section>
     </div>
 
+    <script src="js/bg-shader.js"></script>
     <script src="js/slot.js"></script>
 </body>
 </html>

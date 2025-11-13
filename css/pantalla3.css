@@ -2,19 +2,21 @@
 
 :root {
   --game-width: 1080px;
-  --game-height: 1440px;
+  --game-height: 1920px;
   --reel-width: 300px;
   --reel-height: 1120px; /* altura mayor para reducir espacios vacíos superior/inferior */
   --tile-height: 260px;
   /* frame-offset-y eliminado: se usa centro geométrico del reel */
 }
 
-html, body { width: 100%; height: 100%; overflow: hidden; background: transparent; font-family: 'Ubuntu', Arial, sans-serif; }
+html, body { width: 100%; height: 100%; min-height: 100vh; overflow: hidden; background: #1ca0be; font-family: 'Ubuntu', Arial, sans-serif; margin: 0; padding: 0; }
 
-.game-container { position: relative; width: var(--game-width); height: var(--game-height); margin: 0 auto; overflow: hidden; }
-.game-background { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
+.game-container { position: relative; width: var(--game-width); height: var(--game-height); margin: 0 auto; background: #1ca0be; }
+.background-layer { position: absolute; inset: 0; z-index: 0; }
+.background-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: block; }
+.game-background { position: absolute; inset: 0; width: 100%; height: auto; max-height: 1440px; object-fit: contain; z-index: 1; }
 
-.machine { position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.machine { position: absolute; top: 0; left: 0; z-index: 2; width: 100%; height: 1440px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
 
 .reels { display: flex; gap: 36px; align-items: center; justify-content: center; margin-top: 4%; }
 
