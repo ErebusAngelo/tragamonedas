@@ -276,24 +276,4 @@ body, html {
     }
 }
 
-/* Media query para ajustar a diferentes tamaños de pantalla */
-@media screen and (max-width: 1080px) {
-    .container {
-        width: 100vw;
-        height: 100vh;
-    }
-    
-    .san-juan {
-        width: 22vw;
-        height: auto;
-    }
-    
-    .mi-tierra {
-        width: 59vw;
-        height: auto;
-    }
-    
-    .comenzar-btn img, .botonplay-btn img {
-        width: 32vw;
-    }
-}
+/* Media query para 1080px eliminado según requerimiento */
