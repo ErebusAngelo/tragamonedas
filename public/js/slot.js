@@ -1,5 +1,8 @@
 // Slot machine logic: 3 reels, stop by touch/click; win if all show win.png
 (function() {
+  // Inicializar PointServer (LM)
+  const LM = new PointServer();
+  
   const IMG_DIR = 'assets/gamescreen/';
   const BASE_IMAGES = [
     '1.png','2.png','3.png','4.png','5.png','6.png','7.png','8.png','9.png','10.png','11.png','12.png','13.png','win.png'
@@ -192,10 +195,48 @@
     });
   }
 
+  // Actualizar PointServer y detectar toques en reels
+  function checkPointsOnReels() {
+    const allPoints = LM.getAllPoints();
+    
+    reelObjs.forEach((ro, idx) => {
+      const reelEl = ro.reelEl;
+      const rect = reelEl.getBoundingClientRect();
+      
+      // Verificar si algún punto está sobre este reel
+      const hasPoint = allPoints.some(point => {
+        return point.x >= rect.left && 
+               point.x <= rect.right && 
+               point.y >= rect.top && 
+               point.y <= rect.bottom;
+      });
+      
+      // Si hay un punto y el reel no está detenido, detenerlo
+      if (hasPoint && !ro.state.stopped && !ro.state.stopping) {
+        const half = ro.tileH / 2;
+        const r = (ro.state.pos + ro.center) % ro.tileH;
+        let delta = half - r;
+        if (delta <= 0) delta += ro.tileH;
+        ro.state.targetPos = ro.state.pos + delta;
+        ro.state.targetIndex = Math.floor((ro.state.pos + ro.center + delta) / ro.tileH);
+        ro.state.stopping = true;
+      }
+    });
+  }
+
   let last = performance.now();
   function frame(now) {
     const dt = Math.min(0.033, (now - last) / 1000);
     last = now;
+    
+    // Actualizar PointServer con mouse y touch
+    const touches = Array.from(document.querySelectorAll(':active')).length > 0 ? 
+                    Array.from(document.touches || []) : [];
+    LM.update(0, 0, false, touches);
+    
+    // Verificar puntos sobre reels
+    checkPointsOnReels();
+    
     for (const ro of reelObjs) ro.update?.(dt);
     updateZoom(); // Actualizar zoom en cada frame
     requestAnimationFrame(frame);
@@ -306,6 +347,9 @@
   }
 
   requestAnimationFrame(frame);
+
+  // Exponer LM globalmente para acceso externo
+  window.LM = LM;
 
   // Reinicio automático no requerido; se vuelve a index al finalizar
 })();
