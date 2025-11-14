@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mala suerte - Intenta de nuevo</title>
+    <link rel="stylesheet" href="css/pantalla-resultado.css">
+</head>
+<body>
+    <div class="resultado-container perdedor">
+        <!-- Fondo: shader WebGL -->
+        <div class="background-layer">
+            <canvas id="bgCanvas" class="background-canvas"></canvas>
+        </div>
+
+        <!-- Contenido principal -->
+        <div class="content">
+            <!-- Icono animado -->
+            <div class="icon-wrapper">
+                <div class="sad-icon">😔</div>
+            </div>
+
+            <!-- Mensaje principal -->
+            <h1 class="title">¡Mala suerte!</h1>
+            <p class="message">No hubo coincidencia</p>
+            <p class="submessage">¡Intentá de nuevo!</p>
+
+            <!-- Botón para reintentar -->
+            <button class="continue-btn" onclick="location.href='index.html'">
+                <span>Volver a jugar</span>
+            </button>
+        </div>
+
+        <!-- Logos footer -->
+        <div class="logofooter">
+            <img src="assets/logofoot.png" alt="Logo footer" class="logofooter-img">
+        </div>
+    </div>
+
+    <script src="js/bg-shader.js"></script>
+</body>
+</html>

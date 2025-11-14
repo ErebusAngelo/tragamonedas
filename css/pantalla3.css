@@ -44,12 +44,39 @@ html, body { width: 100%; height: 100%; min-height: 100vh; overflow: hidden; bac
   justify-content: center;
   overflow: hidden;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
 }
 
 .zoom-tile img {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+/* Animación cuando el rodillo se detiene */
+.zoom-tile.stopped {
+  animation: flamePulse 0.6s ease-out;
+  border-color: rgba(255, 165, 0, 0.8);
+  box-shadow: 0 0 30px rgba(255, 165, 0, 0.6), 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Animación especial cuando es WIN */
+.zoom-tile.win {
+  animation: flameWin 1s ease-out;
+  border-color: rgba(255, 215, 0, 1);
+  box-shadow: 0 0 50px rgba(255, 215, 0, 0.8), 0 0 80px rgba(255, 165, 0, 0.5);
+}
+
+/* Animación cuando los 3 son WIN */
+.zoom-tile.all-win {
+  animation: flameExplosion 1.2s ease-out;
+  border-color: rgba(255, 215, 0, 1);
+  box-shadow: 0 0 60px rgba(255, 215, 0, 1), 0 0 100px rgba(255, 165, 0, 0.8), 0 0 140px rgba(255, 100, 0, 0.5);
+}
+
+.zoom-tile.all-win img {
+  animation: scaleWin 1.2s ease-out;
 }
 
 /* Máquina tragamonedas inferior */
@@ -74,4 +101,74 @@ html, body { width: 100%; height: 100%; min-height: 100vh; overflow: hidden; bac
 .tile { width: 100%; height: var(--tile-height); object-fit: contain; display: block; }
 
 .reel-frame { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-/* Indicadores laterales deshabilitados temporalmente para debug */
+
+/* Animaciones de llama */
+@keyframes flamePulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+  50% {
+    transform: scale(1.08);
+    box-shadow: 0 0 40px rgba(255, 165, 0, 0.8), 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 30px rgba(255, 165, 0, 0.6), 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+}
+
+@keyframes flameWin {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+  30% {
+    transform: scale(1.12);
+    box-shadow: 0 0 60px rgba(255, 215, 0, 1), 0 0 90px rgba(255, 165, 0, 0.7);
+  }
+  60% {
+    transform: scale(0.98);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 50px rgba(255, 215, 0, 0.8), 0 0 80px rgba(255, 165, 0, 0.5);
+  }
+}
+
+@keyframes flameExplosion {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+  20% {
+    transform: scale(1.2);
+    box-shadow: 0 0 80px rgba(255, 215, 0, 1), 0 0 120px rgba(255, 165, 0, 1), 0 0 160px rgba(255, 100, 0, 0.7);
+  }
+  40% {
+    transform: scale(0.95);
+  }
+  60% {
+    transform: scale(1.1);
+    box-shadow: 0 0 70px rgba(255, 215, 0, 1), 0 0 110px rgba(255, 165, 0, 0.9);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 60px rgba(255, 215, 0, 1), 0 0 100px rgba(255, 165, 0, 0.8), 0 0 140px rgba(255, 100, 0, 0.5);
+  }
+}
+
+@keyframes scaleWin {
+  0%, 100% {
+    transform: scale(1);
+  }
+  20% {
+    transform: scale(1.15);
+  }
+  40% {
+    transform: scale(0.95);
+  }
+  60% {
+    transform: scale(1.08);
+  }
+}

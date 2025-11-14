@@ -227,6 +227,7 @@
       if (y < -modRange) y += modRange;
       track.style.transform = `translate3d(0, ${y}px, 0)`;
     }
+
     function finalizeStop() {
       state.speed = 0;
       state.running = false;
@@ -239,19 +240,52 @@
       const tileEl = track.children[idx];
       const alt = tileEl?.alt || '';
       state.win = alt.toLowerCase() === 'win';
+      
+      // Agregar animación de llama al zoom tile correspondiente
+      const zoomTile = document.getElementById(`zoom-tile-${i}`);
+      if (zoomTile) {
+        zoomTile.classList.add('stopped');
+        if (state.win) {
+          setTimeout(() => {
+            zoomTile.classList.remove('stopped');
+            zoomTile.classList.add('win');
+          }, 600);
+        }
+      }
+      
       checkAllStopped();
     }
+
     function checkAllStopped() {
       const allStopped = reelObjs.every(r => r.state.stopped);
       if (allStopped) {
-        // En modo debug no redirigimos automáticamente
-        if (!DEBUG_NO_REDIRECT) {
-          setTimeout(() => { window.location.href = 'index.html'; }, 2500);
-        } else {
-          console.debug('Debug: todos los rodillos detenidos. Sin redirección.');
+        // Verificar si todos los rodillos muestran 'win'
+        const allWin = reelObjs.every(r => r.state.win);
+        
+        // Si todos son win, agregar animación especial
+        if (allWin) {
+          [0, 1, 2].forEach(idx => {
+            const zoomTile = document.getElementById(`zoom-tile-${idx}`);
+            if (zoomTile) {
+              zoomTile.classList.remove('win');
+              zoomTile.classList.add('all-win');
+            }
+          });
         }
+        
+        // Esperar 1.5 segundos antes de redirigir
+        setTimeout(() => {
+          if (allWin) {
+            // Todos ganaron - ir a pantalla de ganador
+            window.location.href = 'pantalla-ganador.html';
+          } else {
+            // No todos ganaron - ir a pantalla de perdedor
+            window.location.href = 'pantalla-perdedor.html';
+          }
+        }, 1500);
       }
     }
+
     ro.render = render;
     ro.update = (dt) => {
       if (state.running) { state.pos += state.speed * dt; }

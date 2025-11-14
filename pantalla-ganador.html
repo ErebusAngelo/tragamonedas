@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Felicidades! - Ganador</title>
+    <link rel="stylesheet" href="css/pantalla-resultado.css">
+</head>
+<body>
+    <div class="resultado-container ganador">
+        <!-- Fondo: shader WebGL -->
+        <div class="background-layer">
+            <canvas id="bgCanvas" class="background-canvas"></canvas>
+        </div>
+
+        <!-- Confetti animado -->
+        <div class="confetti-container" id="confetti"></div>
+
+        <!-- Contenido principal -->
+        <div class="content">
+            <!-- Icono de trofeo animado -->
+            <div class="icon-wrapper">
+                <div class="trophy-icon">🏆</div>
+            </div>
+
+            <!-- Mensaje principal -->
+            <h1 class="title">¡Felicidades!</h1>
+            <p class="message">¡Se llevaron el premio!</p>
+
+            <!-- Imagen ganadora (Mi Tierra Querida) -->
+            <div class="winning-image">
+                <img src="assets/gamescreen/win.png" alt="Mi Tierra Querida">
+            </div>
+
+            <!-- Botón para continuar -->
+            <button class="continue-btn" onclick="location.href='index.html'">
+                <span>Continuar</span>
+            </button>
+        </div>
+
+        <!-- Logos footer -->
+        <div class="logofooter">
+            <img src="assets/logofoot.png" alt="Logo footer" class="logofooter-img">
+        </div>
+    </div>
+
+    <script src="js/bg-shader.js"></script>
+    <script src="js/confetti.js"></script>
+</body>
+</html>
