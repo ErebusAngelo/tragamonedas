@@ -3,10 +3,11 @@
 :root {
   --game-width: 1080px;
   --game-height: 1920px;
-  --reel-width: 300px;
-  --reel-height: 1120px; /* altura mayor para reducir espacios vacíos superior/inferior */
-  --tile-height: 260px;
-  /* frame-offset-y eliminado: se usa centro geométrico del reel */
+  --zoom-area-height: 960px; /* 50% de 1920px */
+  --machine-area-height: 960px; /* 50% de 1920px */
+  --reel-width: 200px; /* reducido de 300px */
+  --reel-height: 700px; /* reducido de 1120px */
+  --tile-height: 160px; /* reducido de 260px */
 }
 
 html, body { width: 100%; height: 100%; min-height: 100vh; overflow: hidden; background: #1ca0be; font-family: 'Ubuntu', Arial, sans-serif; margin: 0; padding: 0; }
@@ -14,13 +15,61 @@ html, body { width: 100%; height: 100%; min-height: 100vh; overflow: hidden; bac
 .game-container { position: relative; width: var(--game-width); height: var(--game-height); margin: 0 auto; background: #1ca0be; }
 .background-layer { position: absolute; inset: 0; z-index: 0; }
 .background-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: block; }
-.game-background { position: absolute; inset: 0; width: 100%; height: auto; max-height: 1440px; object-fit: contain; z-index: 1; }
+.game-background { position: absolute; bottom: 100px; left: 0; width: 100%; height: var(--machine-area-height); object-fit: contain; z-index: 1; }
 
-.machine { position: absolute; top: 0; left: 0; z-index: 2; width: 100%; height: 1440px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+/* Área de zoom superior */
+.zoom-area {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--zoom-area-height);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  padding: 60px;
+}
 
-.reels { display: flex; gap: 36px; align-items: center; justify-content: center; margin-top: 4%; }
+.zoom-tile {
+  width: 280px;
+  height: 280px;
+  border-radius: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
 
-.reel { position: relative; width: var(--reel-width); height: var(--reel-height); overflow: hidden; border-radius: 180px; background: rgba(5, 20, 30, 0.85); box-shadow: inset 0 0 60px rgba(0,0,0,0.5); cursor: pointer; }
+.zoom-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Máquina tragamonedas inferior */
+.machine {
+  position: absolute;
+  bottom: 100px;
+  left: 0;
+  z-index: 2;
+  width: 100%;
+  height: var(--machine-area-height);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 80px;
+}
+
+.reels { display: flex; gap: 24px; align-items: center; justify-content: center; margin-top: 4%; }
+
+.reel { position: relative; width: var(--reel-width); height: var(--reel-height); overflow: hidden; border-radius: 120px; background: rgba(5, 20, 30, 0.85); box-shadow: inset 0 0 40px rgba(0,0,0,0.5); cursor: pointer; }
 .reel-track { position: absolute; left: 0; top: 0; width: 100%; will-change: transform; }
 .tile { width: 100%; height: var(--tile-height); object-fit: contain; display: block; }
 

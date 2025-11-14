@@ -165,11 +165,39 @@
 
   const reelObjs = reels.map(makeReel);
 
+  // Referencias a los elementos de zoom
+  const zoomImgs = [
+    document.getElementById('zoom-img-0'),
+    document.getElementById('zoom-img-1'),
+    document.getElementById('zoom-img-2')
+  ];
+
+  // Función para actualizar el zoom mostrando el tile central de cada rodillo
+  function updateZoom() {
+    reelObjs.forEach((ro, idx) => {
+      const { track, state, tileH, center, trackH, reelH } = ro;
+      const totalTiles = track.children.length;
+      
+      // Calcular qué tile está en el centro del rodillo
+      const half = tileH / 2;
+      const k = Math.round((state.pos + center - half) / tileH);
+      const tileIdx = ((k % totalTiles) + totalTiles) % totalTiles;
+      const tileEl = track.children[tileIdx];
+      
+      // Actualizar la imagen del zoom
+      if (tileEl && zoomImgs[idx]) {
+        zoomImgs[idx].src = tileEl.src;
+        zoomImgs[idx].alt = tileEl.alt;
+      }
+    });
+  }
+
   let last = performance.now();
   function frame(now) {
     const dt = Math.min(0.033, (now - last) / 1000);
     last = now;
     for (const ro of reelObjs) ro.update?.(dt);
+    updateZoom(); // Actualizar zoom en cada frame
     requestAnimationFrame(frame);
   }
   // Attach update methods on returned objects
